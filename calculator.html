@@ -10,6 +10,7 @@
     <div class="calculator-container">
         <div class="calculator">
             <div class="display">
+                <div class="expression-display" id="expression">0</div>
                 <div class="display-screen" id="display">0</div>
             </div>
             <div class="buttons">
@@ -35,6 +36,13 @@
                 
                 <button class="btn btn-number btn-zero" onclick="appendNumber('0')">0</button>
                 <button class="btn btn-number" onclick="appendDecimal()">.</button>
+            </div>
+            <div class="history">
+                <div class="history-header">
+                    <span>计算记录</span>
+                    <button class="btn-history-clear" onclick="clearHistory()">清空</button>
+                </div>
+                <div class="history-list" id="history-list"></div>
             </div>
         </div>
     </div>
