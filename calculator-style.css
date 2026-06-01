@@ -138,6 +138,10 @@ body {
     background: #3be068;
 }
 
+.btn-equals-span {
+    grid-row: span 2;
+}
+
 .btn-zero {
     grid-column: span 2;
 }
