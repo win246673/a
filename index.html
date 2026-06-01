@@ -1,42 +1,232 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简易计算器</title>
+    <title>多功能工具集</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator">
-        <div class="display">
-            <div id="display">0</div>
-        </div>
-        <div class="buttons">
-            <button class="btn btn-clear" onclick="clearDisplay()">C</button>
-            <button class="btn btn-delete" onclick="deleteChar()">DEL</button>
-            <button class="btn btn-operator" onclick="appendOperator('/')">/</button>
-            <button class="btn btn-operator" onclick="appendOperator('*')">*</button>
-            
-            <button class="btn btn-number" onclick="appendNumber('7')">7</button>
-            <button class="btn btn-number" onclick="appendNumber('8')">8</button>
-            <button class="btn btn-number" onclick="appendNumber('9')">9</button>
-            <button class="btn btn-operator" onclick="appendOperator('-')">-</button>
-            
-            <button class="btn btn-number" onclick="appendNumber('4')">4</button>
-            <button class="btn btn-number" onclick="appendNumber('5')">5</button>
-            <button class="btn btn-number" onclick="appendNumber('6')">6</button>
-            <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
-            
-            <button class="btn btn-number" onclick="appendNumber('1')">1</button>
-            <button class="btn btn-number" onclick="appendNumber('2')">2</button>
-            <button class="btn btn-number" onclick="appendNumber('3')">3</button>
-            <button class="btn btn-equals" onclick="calculate()">=</button>
-            
-            <button class="btn btn-number btn-zero" onclick="appendNumber('0')">0</button>
-            <button class="btn btn-number" onclick="appendDecimal()">.</button>
-            <button class="btn btn-equals" onclick="calculate()">=</button>
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-title">工具集</h1>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="calculator">计算器</button>
+                <button class="nav-tab" data-tab="todo">待办事项</button>
+                <button class="nav-tab" data-tab="accounts">记账本</button>
+                <button class="nav-tab" data-tab="stats">统计</button>
+                <button class="nav-tab" data-tab="about">关于我</button>
+            </nav>
+            <div class="header-actions">
+                <button class="action-btn" id="themeToggle" title="切换主题">🌓</button>
+                <button class="action-btn" id="exportBtn" title="导出数据">📤</button>
+                <button class="action-btn" id="importBtn" title="导入数据">📥</button>
+                <input type="file" id="importFile" accept=".json" style="display:none">
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="tool-section active" id="calculator">
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="showRecent('calculator')">最近使用</button>
+                </div>
+                <div class="calculator">
+                    <div class="display">
+                        <div id="calc-display">0</div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-clear" onclick="calcClear()">C</button>
+                        <button class="btn btn-delete" onclick="calcDelete()">DEL</button>
+                        <button class="btn btn-operator" onclick="calcAppendOp('/')">/</button>
+                        <button class="btn btn-operator" onclick="calcAppendOp('*')">*</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('7')">7</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('8')">8</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('9')">9</button>
+                        <button class="btn btn-operator" onclick="calcAppendOp('-')">-</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('4')">4</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('5')">5</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('6')">6</button>
+                        <button class="btn btn-operator" onclick="calcAppendOp('+')">+</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('1')">1</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('2')">2</button>
+                        <button class="btn btn-number" onclick="calcAppendNum('3')">3</button>
+                        <button class="btn btn-equals" onclick="calcEquals()">=</button>
+                        <button class="btn btn-number btn-zero" onclick="calcAppendNum('0')">0</button>
+                        <button class="btn btn-number" onclick="calcAppendDecimal()">.</button>
+                    </div>
+                    <div class="calc-history">
+                        <h4>历史记录</h4>
+                        <ul id="calc-history-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-section" id="todo">
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="showRecent('todo')">最近使用</button>
+                </div>
+                <div class="todo-container">
+                    <div class="todo-input-area">
+                        <input type="text" id="todo-input" placeholder="添加新待办...">
+                        <select id="todo-priority">
+                            <option value="low">低优先级</option>
+                            <option value="medium" selected>中优先级</option>
+                            <option value="high">高优先级</option>
+                        </select>
+                        <button class="add-btn" onclick="addTodo()">添加</button>
+                    </div>
+                    <div class="todo-filters">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn" data-filter="pending">待完成</button>
+                        <button class="filter-btn" data-filter="completed">已完成</button>
+                    </div>
+                    <ul class="todo-list" id="todo-list"></ul>
+                    <div class="todo-stats">
+                        <span>总计: <strong id="todo-total">0</strong></span>
+                        <span>已完成: <strong id="todo-completed">0</strong></span>
+                        <span>完成率: <strong id="todo-rate">0%</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-section" id="accounts">
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="showRecent('accounts')">最近使用</button>
+                </div>
+                <div class="accounts-container">
+                    <div class="accounts-summary">
+                        <div class="summary-card income">
+                            <h4>收入</h4>
+                            <p id="total-income">¥0.00</p>
+                        </div>
+                        <div class="summary-card expense">
+                            <h4>支出</h4>
+                            <p id="total-expense">¥0.00</p>
+                        </div>
+                        <div class="summary-card balance">
+                            <h4>余额</h4>
+                            <p id="total-balance">¥0.00</p>
+                        </div>
+                    </div>
+                    <div class="accounts-input">
+                        <select id="acc-type">
+                            <option value="income">收入</option>
+                            <option value="expense">支出</option>
+                        </select>
+                        <input type="number" id="acc-amount" placeholder="金额">
+                        <input type="text" id="acc-desc" placeholder="说明">
+                        <button class="add-btn" onclick="addAccount()">记录</button>
+                    </div>
+                    <div class="accounts-list">
+                        <h4>记录列表</h4>
+                        <ul id="acc-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-section" id="stats">
+                <div class="stats-container">
+                    <h3>使用统计</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>计算器</h4>
+                            <p>使用次数: <span id="stat-calc-count">0</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>待办事项</h4>
+                            <p>添加次数: <span id="stat-todo-count">0</span></p>
+                            <p>完成率: <span id="stat-todo-rate">0%</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>记账本</h4>
+                            <p>记录次数: <span id="stat-acc-count">0</span></p>
+                            <p>总收入: <span id="stat-acc-income">¥0</span></p>
+                            <p>总支出: <span id="stat-acc-expense">¥0</span></p>
+                        </div>
+                    </div>
+                    <div class="recent-records">
+                        <h4>最近操作</h4>
+                        <ul id="recent-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-section" id="about">
+                <div class="about-container">
+                    <div class="profile-card">
+                        <div class="profile-avatar">👤</div>
+                        <h2>张三</h2>
+                        <p class="profile-title">全栈开发工程师</p>
+                    </div>
+                    <div class="profile-section">
+                        <h3>个人信息</h3>
+                        <p><strong>年龄:</strong> 28岁</p>
+                        <p><strong>学历:</strong> 本科 - 计算机科学</p>
+                        <p><strong>工作年限:</strong> 5年</p>
+                        <p><strong>所在地:</strong> 北京市</p>
+                    </div>
+                    <div class="profile-section">
+                        <h3>联系方式</h3>
+                        <p>📧 zhangsan@example.com</p>
+                        <p>📱 138-xxxx-xxxx</p>
+                        <p>🌐 www.example.com</p>
+                    </div>
+                    <div class="profile-section">
+                        <h3>技能专长</h3>
+                        <div class="skills">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Vue.js</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">AWS</span>
+                        </div>
+                    </div>
+                    <div class="profile-section">
+                        <h3>工作经历</h3>
+                        <div class="experience">
+                            <div class="exp-item">
+                                <h4>高级前端工程师 - 某某科技公司</h4>
+                                <p class="exp-date">2022年 - 至今</p>
+                                <p>负责前端架构设计与团队技术管理，主导多个大型项目开发。</p>
+                            </div>
+                            <div class="exp-item">
+                                <h4>前端开发工程师 - 互联网公司</h4>
+                                <p class="exp-date">2019年 - 2022年</p>
+                                <p>参与核心业务系统开发，专注于React技术栈。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-section">
+                        <h3>项目经验</h3>
+                        <div class="experience">
+                            <div class="exp-item">
+                                <h4>企业内部管理系统</h4>
+                                <p>使用Vue.js + Element UI开发的ERP系统，包含订单管理、库存管理等模块。</p>
+                            </div>
+                            <div class="exp-item">
+                                <h4>移动端应用</h4>
+                                <p>使用React Native开发的跨平台移动应用，用户量超过50万。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="modal" id="recentModal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeRecentModal()">&times;</span>
+                <h3>最近使用</h3>
+                <ul id="recentModalList"></ul>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
