@@ -624,90 +624,53 @@ body {
 }
 
 .about-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
-.profile-card {
+.pdf-viewer {
+    width: 100%;
+}
+
+.pdf-viewer h3 {
     text-align: center;
-    padding: 30px;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-    border-radius: 15px;
-    color: white;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.pdf-viewer object {
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    background: white;
+}
+
+.pdf-fallback {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.pdf-fallback p {
+    color: var(--text-secondary);
     margin-bottom: 20px;
 }
 
-.profile-avatar {
-    font-size: 4rem;
-    margin-bottom: 15px;
-}
-
-.profile-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-}
-
-.profile-title {
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-.profile-section {
-    background: var(--bg-secondary);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.profile-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 8px;
-}
-
-.profile-section p {
-    margin: 8px 0;
-    line-height: 1.6;
-}
-
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.skill-tag {
-    padding: 6px 14px;
+.download-link {
+    display: inline-block;
+    padding: 12px 24px;
     background: var(--primary-color);
     color: white;
-    border-radius: 20px;
-    font-size: 0.85rem;
-}
-
-.experience {
-    margin-top: 10px;
-}
-
-.exp-item {
-    padding: 15px;
-    background: var(--bg-card);
+    text-decoration: none;
     border-radius: 8px;
-    margin-bottom: 10px;
-    border-left: 4px solid var(--primary-color);
+    transition: background 0.2s;
 }
 
-.exp-item h4 {
-    font-size: 1rem;
-    color: var(--text-primary);
-    margin-bottom: 5px;
-}
-
-.exp-date {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
+.download-link:hover {
+    background: var(--primary-hover);
 }
 
 .modal {
@@ -804,5 +767,10 @@ body {
     .todo-stats {
         flex-direction: column;
         gap: 10px;
+    }
+
+    .pdf-viewer object {
+        height: 400px;
+        width: 100%;
     }
 }
