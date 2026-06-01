@@ -3,44 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简易计算器</title>
+    <title>计算器</title>
     <link rel="stylesheet" href="calculator-style.css">
 </head>
 <body>
-    <div class="calculator-container">
+    <div class="calculator-wrapper">
         <div class="calculator">
-            <div class="display">
-                <div class="expression-display" id="expression">0</div>
-                <div class="display-screen" id="display">0</div>
+            <div class="screen-container">
+                <div class="expression" id="expression"></div>
+                <div class="result" id="result">0</div>
             </div>
-            <div class="buttons">
-                <button class="btn btn-clear" onclick="clearDisplay()">C</button>
-                <button class="btn btn-delete" onclick="deleteChar()">DEL</button>
-                <button class="btn btn-operator" onclick="appendOperator('/')">/</button>
-                <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
+            
+            <div class="keypad">
+                <button class="key key-clear" onclick="clearDisplay()">C</button>
+                <button class="key key-delete" onclick="deleteChar()">⌫</button>
+                <button class="key key-operator" onclick="appendOperator('%')">%</button>
+                <button class="key key-operator" onclick="appendOperator('/')">÷</button>
                 
-                <button class="btn btn-number" onclick="appendNumber('7')">7</button>
-                <button class="btn btn-number" onclick="appendNumber('8')">8</button>
-                <button class="btn btn-number" onclick="appendNumber('9')">9</button>
-                <button class="btn btn-operator" onclick="appendOperator('-')">−</button>
+                <button class="key key-number" onclick="appendNumber('7')">7</button>
+                <button class="key key-number" onclick="appendNumber('8')">8</button>
+                <button class="key key-number" onclick="appendNumber('9')">9</button>
+                <button class="key key-operator" onclick="appendOperator('*')">×</button>
                 
-                <button class="btn btn-number" onclick="appendNumber('4')">4</button>
-                <button class="btn btn-number" onclick="appendNumber('5')">5</button>
-                <button class="btn btn-number" onclick="appendNumber('6')">6</button>
-                <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
+                <button class="key key-number" onclick="appendNumber('4')">4</button>
+                <button class="key key-number" onclick="appendNumber('5')">5</button>
+                <button class="key key-number" onclick="appendNumber('6')">6</button>
+                <button class="key key-operator" onclick="appendOperator('-')">−</button>
                 
-                <button class="btn btn-number" onclick="appendNumber('1')">1</button>
-                <button class="btn btn-number" onclick="appendNumber('2')">2</button>
-                <button class="btn btn-number" onclick="appendNumber('3')">3</button>
-                <button class="btn btn-equals btn-equals-span" onclick="calculate()">=</button>
+                <button class="key key-number" onclick="appendNumber('1')">1</button>
+                <button class="key key-number" onclick="appendNumber('2')">2</button>
+                <button class="key key-number" onclick="appendNumber('3')">3</button>
+                <button class="key key-operator" onclick="appendOperator('+')">+</button>
                 
-                <button class="btn btn-number btn-zero" onclick="appendNumber('0')">0</button>
-                <button class="btn btn-number" onclick="appendDecimal()">.</button>
+                <button class="key key-number key-zero" onclick="appendNumber('0')">0</button>
+                <button class="key key-number" onclick="appendDecimal()">.</button>
+                <button class="key key-equals" onclick="calculate()">=</button>
             </div>
-            <div class="history">
+            
+            <div class="history-panel">
                 <div class="history-header">
-                    <span>计算记录</span>
-                    <button class="btn-history-clear" onclick="clearHistory()">清空</button>
+                    <span class="history-title">📝 计算记录</span>
+                    <button class="btn-clear-history" onclick="clearHistory()">清空</button>
                 </div>
                 <div class="history-list" id="history-list"></div>
             </div>

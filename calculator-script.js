@@ -1,4 +1,4 @@
-let display = document.getElementById('display');
+let resultDisplay = document.getElementById('result');
 let expressionDisplay = document.getElementById('expression');
 let historyList = document.getElementById('history-list');
 let currentInput = '0';
@@ -6,15 +6,15 @@ let previousInput = '';
 let operator = null;
 let history = [];
 
-function updateDisplay() {
-    display.textContent = currentInput;
+function updateResult() {
+    resultDisplay.textContent = currentInput;
 }
 
 function updateExpression() {
     if (previousInput && operator) {
         expressionDisplay.textContent = `${previousInput} ${getDisplayOperator(operator)} ${currentInput}`;
     } else {
-        expressionDisplay.textContent = '0';
+        expressionDisplay.textContent = '';
     }
 }
 
@@ -23,7 +23,8 @@ function getDisplayOperator(op) {
         '+': '+',
         '-': '−',
         '*': '×',
-        '/': '÷'
+        '/': '÷',
+        '%': '%'
     };
     return operators[op] || op;
 }
@@ -34,14 +35,14 @@ function appendNumber(num) {
     } else {
         currentInput += num;
     }
-    updateDisplay();
+    updateResult();
     updateExpression();
 }
 
 function appendDecimal() {
     if (!currentInput.includes('.')) {
         currentInput += '.';
-        updateDisplay();
+        updateResult();
         updateExpression();
     }
 }
@@ -60,7 +61,7 @@ function clearDisplay() {
     currentInput = '0';
     previousInput = '';
     operator = null;
-    updateDisplay();
+    updateResult();
     updateExpression();
 }
 
@@ -70,7 +71,7 @@ function deleteChar() {
     } else {
         currentInput = '0';
     }
-    updateDisplay();
+    updateResult();
     updateExpression();
 }
 
@@ -104,11 +105,12 @@ function calculate() {
                 result = prev / current;
             }
             break;
+        case '%':
+            result = prev * (current / 100);
+            break;
         default:
             return;
     }
-    
-    const expression = `${previousInput} ${getDisplayOperator(operator)} ${currentInput} = ${result}`;
     
     if (typeof result === 'number') {
         if (!Number.isInteger(result)) {
@@ -130,7 +132,7 @@ function calculate() {
     currentInput = result.toString();
     previousInput = '';
     operator = null;
-    updateDisplay();
+    updateResult();
     updateExpression();
 }
 
@@ -153,7 +155,7 @@ function loadHistory(index) {
     currentInput = item.result;
     previousInput = '';
     operator = null;
-    updateDisplay();
+    updateResult();
     updateExpression();
 }
 
